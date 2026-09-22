@@ -79,7 +79,7 @@ public class Main {
 
     private static Owner promptOwner() {
         String idCard = promptIdCard();
-        Owner existing = findOwnerIfExists(idCard);
+        Owner existing = manager.getExistingOwner(idCard);
         if (existing != null) {
             System.out.println("Existing owner found and reused: " + existing);
             return existing;
@@ -87,11 +87,6 @@ public class Main {
         String name = promptNonEmpty("Owner full name: ");
         String email = promptEmail();
         return manager.getOrRegisterOwner(idCard, name, email);
-    }
-
-    private static Owner findOwnerIfExists(String idCard) {
-        List<Vehicle> owned = manager.findByOwnerIdCard(idCard);
-        return owned.isEmpty() ? null : owned.get(0).getOwner();
     }
 
     private static void searchByVehicleNumber() {
@@ -153,7 +148,7 @@ public class Main {
     private static String promptVehicleNumber() {
         while (true) {
             String number = promptNonEmpty("Vehicle number (exactly 5 characters): ");
-            if (!number.matches("^[A-Za-z0-9]{5}$")) {
+            if (!Vehicle.NUMBER_PATTERN.matcher(number).matches()) {
                 System.out.println("Invalid format, please enter exactly 5 letters/digits.");
                 continue;
             }
@@ -195,7 +190,7 @@ public class Main {
     private static String promptIdCard() {
         while (true) {
             String idCard = promptNonEmpty("Owner's ID card number (exactly 12 digits): ");
-            if (idCard.matches("^\\d{12}$")) {
+            if (Owner.ID_CARD_PATTERN.matcher(idCard).matches()) {
                 return idCard;
             }
             System.out.println("ID card number must be exactly 12 digits.");
@@ -205,7 +200,7 @@ public class Main {
     private static String promptEmail() {
         while (true) {
             String email = promptNonEmpty("Owner's email: ");
-            if (email.matches("^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
+            if (Owner.EMAIL_PATTERN.matcher(email).matches()) {
                 return email;
             }
             System.out.println("Invalid email format.");
@@ -232,10 +227,10 @@ public class Main {
             String input = promptNonEmpty(label);
             try {
                 double value = Double.parseDouble(input);
-                if (value > 0) {
+                if (Double.isFinite(value) && value > 0) {
                     return value;
                 }
-                System.out.println("Value must be greater than 0.");
+                System.out.println("Value must be a finite number greater than 0.");
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number.");
             }

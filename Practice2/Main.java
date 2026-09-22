@@ -156,10 +156,10 @@ public class Main {
             String input = promptNonEmpty(label);
             try {
                 double value = Double.parseDouble(input);
-                if (value >= 0) {
+                if (Double.isFinite(value) && value >= 0) {
                     return value;
                 }
-                System.out.println("Value must be >= 0.");
+                System.out.println("Value must be a finite number >= 0.");
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number.");
             }

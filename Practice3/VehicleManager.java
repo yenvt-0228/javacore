@@ -24,6 +24,10 @@ public class VehicleManager {
         return owner;
     }
 
+    public Owner getExistingOwner(String idCard) {
+        return ownersByIdCard.get(idCard);
+    }
+
     public boolean isVehicleNumberTaken(String vehicleNumber) {
         return vehicles.stream().anyMatch(v -> v.getVehicleNumber().equalsIgnoreCase(vehicleNumber));
     }

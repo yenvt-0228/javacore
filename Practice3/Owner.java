@@ -3,13 +3,13 @@ package Practice3;
 import java.util.regex.Pattern;
 
 public class Owner {
-    private static final Pattern ID_CARD_PATTERN = Pattern.compile("^\\d{12}$");
-    private static final Pattern EMAIL_PATTERN =
+    public static final Pattern ID_CARD_PATTERN = Pattern.compile("^\\d{12}$");
+    public static final Pattern EMAIL_PATTERN =
             Pattern.compile("^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$");
 
     private final String idCard;
-    private String fullName;
-    private String email;
+    private final String fullName;
+    private final String email;
 
     public Owner(String idCard, String fullName, String email) {
         if (!ID_CARD_PATTERN.matcher(idCard).matches()) {

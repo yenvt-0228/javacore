@@ -1,4 +1,4 @@
-package Bai1;
+package Practice1;
 
 public class Rectangle extends Shape {
 

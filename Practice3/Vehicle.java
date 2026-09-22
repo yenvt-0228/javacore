@@ -4,7 +4,7 @@ import java.time.Year;
 import java.util.regex.Pattern;
 
 public abstract class Vehicle {
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("^[A-Za-z0-9]{5}$");
+    public static final Pattern NUMBER_PATTERN = Pattern.compile("^[A-Za-z0-9]{5}$");
 
     private final String vehicleNumber;
     private final Manufacturer manufacturer;
